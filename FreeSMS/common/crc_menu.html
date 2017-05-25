@@ -1,0 +1,26 @@
+<!--
+This is the menu
+-->
+<table align="left" class="tbl">	
+	<?php
+	 if ($_SESSION['roleid'] == 3) { 
+	   print '<tr align="left"><th nowrap><a href="crc_handler.php?method=courses&func=get" class="hdr">Courses</a></th></tr>';
+	   print '<tr align="left"><th nowrap><a href="crc_handler.php?method=courses&func=editenroll" class="hdr">Enrollment</a></th></tr>';
+	 } else if ($_SESSION['roleid'] == 2) {
+	   print '<tr align="left"><th nowrap><a href="crc_handler.php?method=teacher&func=getschedule" class="hdr">Schedule</a></th></tr>';
+	 } else if ($_SESSION['roleid'] == 1) {
+	   print '<tr align="left"><th nowrap><a href="crc_handler.php?method=admin&func=showaddcourse" class="hdr">Add Course</a></th></tr>';
+	   print '<tr align="left"><th nowrap><a href="crc_handler.php?method=courses&func=courselist" class="hdr">Edit Course</a></th></tr>';
+	   print '<tr align="left"><th nowrap><a href="crc_handler.php?method=admin&func=showaddstudent" class="hdr">Add Student</a></th></tr>';
+	   print '<tr align="left"><th nowrap><a href="crc_handler.php?method=profile&func=studentlist" class="hdr">Edit Student</a></th></tr>';	
+	   print '<tr align="left"><th nowrap><a href="crc_handler.php?method=teacher&func=getschedule" class="hdr">Schedule</a></th></tr>';
+	 }
+	?>
+	<tr align="left"><th nowrap><a href="crc_handler.php?method=profile&func=get" class="hdr">Edit Profile</a></th></tr>
+	<!--
+	<tr align="left"><th nowrap><a href="crc_handler.php?method=events&func=get" class="hdr">News &amp; Events</a></th></tr>
+	<tr align="left"><th nowrap><a href="crc_handler.php?method=team&func=get" class="hdr">Team DM</a></th></tr>
+	-->
+	<tr align="left"><th nowrap><a href="crc_handler.php?method=help&func=get" class="hdr">Help</a></th></tr>
+	<tr align="left"><th nowrap><a href="crc_handler.php?method=logout" class="hdr">Logout</a></th></tr>
+</table>

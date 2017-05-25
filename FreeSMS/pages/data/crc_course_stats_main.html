@@ -1,0 +1,75 @@
+<table width="500">
+	<tr>
+
+		<td valign="top" width="80">
+
+			<!--
+			This is the menu
+			-->
+			<br><br>
+
+				<?php
+					include "../common/crc_menu.html";
+					include "../classes/crc_graph.mod.php";
+				?>
+
+		</td>
+
+		<td valign="top" align="left" width="420">
+	    <!--
+        This is the content
+      -->
+      <br><br>
+		  <table class="tbl">
+          <?php
+            if (isset($_SESSION['msg'])) {
+                $len = strlen($_SESSION['msg']);
+            } else {
+                $len = 0;
+            }
+            if ($len > 0) {
+               	print '<span class=red>' . $_SESSION['msg'] . '</span>';
+				$_SESSION['msg'] = '';
+            } else {
+				$data = $_SESSION['scheduledata'];
+				if ($data != null) {
+					print '<th><b>Attendance for the course "' . $_SESSION['coursesdata'] . '"</b></th>';
+					print '<tr><td align="center">';
+					print '<table>';
+					print '<tr><td align="center"><br></td></tr>';								
+					print ae_bar_html($data);
+					print '<tr><td align="center" colspan="' . count($data) . '"><b>Attendance on each DD-MM-YYYY (min 0, max ' . $_SESSION['data'] . ')</b></td></tr>';
+					print '</table>';
+					print '</td></tr>';
+				}
+				$data = $_SESSION['evaluation'];
+				if ($data != null) {				
+					print '<th><b>Feedback for the course "' . $_SESSION['coursesdata'] . '"</b></th>';
+					print '<tr><td>';				              
+					for($i = 0; $i < count($data); $i++) {
+						print 'Q' . $i . ': ' . $data[$i]['que'] . '<br>';
+						if ($data[$i]['ans'] != 0) {
+							$values['Q' . $i] = $data[$i]['ans'];
+						}
+						if ($data[$i]['comm'] != "") {
+							print 'Comment(s): ' . $data[$i]['comm'] . '<br>';
+						} else if ($data[$i]['ans'] == 0) {
+							print 'Comment(s): none<br>';
+						}
+					}
+					print '</td></tr>';
+					print '<tr><td align="center">';
+					print '<table>';
+					print '<tr><td align="center"><br></td></tr>';								
+					print ae_bar_html($values);
+					print '<tr><td align="center" colspan="' . count($values) . '"><b>Mean feedback at each question (min 1, max 5)</b></td></tr>';
+					print '</table>';
+					print '</td></tr>';
+				}
+            }
+        ?>
+      	</table>
+    </td>
+  </tr>
+</table>
+

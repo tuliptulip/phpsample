@@ -1,0 +1,88 @@
+<form name="adminaddcourse" action="crc_handler.php?method=admin&func=addcourse" method="post">
+
+<input type="hidden" name="context" value="ou=Don Mills,ou=Toronto,ou=Ontario,ou=Canada,o=CRC World">
+
+<table width="500">
+	<tr>
+
+		<td valign="top" width="80">
+
+			<!--
+			This is the menu
+			-->
+			<br><br>
+
+				<?php
+					include "../common/crc_menu.html";
+				?>
+
+		</td>
+
+		<td valign="top" align="left" width="420">
+	    <!--
+        This is the content
+      -->
+      <br><br>
+      <table class="tbl">
+      <?php
+        if (isset($_SESSION['msg'])) {
+	  	    $len = strlen($_SESSION['msg']);
+        } else {
+            $len = 0;
+        }
+		if ($len > 0) {
+			print('<tr><td colspan="2" class="error" align="center"><b>' . $_SESSION['msg'] . '</b></td></tr>');
+			$_SESSION['msg'] = "";
+		}      
+		$data = $_SESSION["data"];
+		print '<tr>';
+			print '<th colspan="2"><em>Enter Course Information</em></th>';
+		print '</tr>';
+		print '<tr>';
+        	print '<td align="right"><span class="error">*</span>Course Name: </td>';
+        	print '<td><input type="text" name="cname" size="50" value="' . $data['cname'] . '"></td>';
+        print '</tr>';
+		print '<tr>';
+        	print '<td align="right">Course Description: </td>';
+        	print '<td><input type="text" name="cdesc" size="50" value="' . $data['cdesc'] .'"></td>';
+        print '</tr>';
+		print '<tr>';
+        	print '<td align="right"><span class="error">*</span>Start Date: </td>';
+        	print '<td><input type="text" name="sday" size="2" value="' . $data['sday'] . '">-<input type="text" name="smonth" size="2" value="' . $data['smonth'] . '">-<input type="text" name="syear" size="4" value="' . $data['syear'] . '"> (DD-MM-YYYY)';
+        	print '</td>';
+        print '</tr>';
+		print '<tr>';
+        	print '<td align="right"><span class="error">*</span>End Date: </td>';
+        	print '<td><input type="text" name="eday" size="2" value="' . $data['eday'] . '">-<input type="text" name="emonth" size="2" value="' . $data['emonth'] . '">-<input type="text" name="eyear" size="4" value="' . $data['eyear'] . '"> (DD-MM-YYYY)';
+        	print '</td>';
+        print '</tr>';
+    	print '<tr>';
+        	print '<td align="right"><span class="error">*</span>Day [Time]: </td>';
+        	print '<td><input type="text" name="daytime" size="15" value="' . $data['daytime'] . '"></td>';
+        print '</tr>';
+    	print '<tr>';
+        	print '<td align="right"><span class="error">*</span>Room: </td>';
+        	print '<td><input type="text" name="roomname" size="5" value="' . $data['roomname'] . '"></td>';
+        print '</tr>';
+		print '<tr>';
+			print '<td align="right"><span class="error">*</span>Teacher(s): </td>';
+			print '<td>';
+			$data = $_SESSION['teacherscheduledata'];
+			for ($i=0; $i < count($data); $i++) {
+				print '<input type=checkbox name="teacher' . $i . '">' . $data[$i]['lastfirstname'] . '<br>';
+			}
+			print '</td>';
+		print '</tr>';
+		print '<tr>';
+      		print '<td colspan="2" align="center"><BR/><input type="submit" name="Add" value="Add" onclick="javascript:verify(\'adminaddcourse\');">';
+		  	print '</td>';
+    	print '</tr>';
+	?>
+      </table>
+    </td>
+  </tr>
+  
+</table>
+
+</form>
+

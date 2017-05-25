@@ -1,0 +1,128 @@
+<?php
+  if (!isset($_SESSION['uid'])) {
+    echo '<meta http-equiv="refresh"' . 'content="0;URL=crc_login.php">';
+  }
+?>
+<table width="550">
+	<tr>
+		<td valign="top" width="80">
+
+			<!--
+			This is the menu
+			-->
+			<br><br>
+
+				<?php
+					include "../common/crc_menu.html";
+				?>
+
+		</td>
+
+		<td valign="top" align="left" width="550">
+	    <!--
+        This is the content
+      -->
+      <br><br>
+			<table class="tbl">
+        <tr><td valign="top">
+          <?php
+            if (isset($_SESSION['msg'])) {
+                $len = strlen($_SESSION['msg']);
+            } else {
+                $len = 0;
+            }
+            if ($len > 0) {
+              print '<span class=red>' . $_SESSION['msg'] . '</span>';
+			  $_SESSION['msg'] = "";
+            } else {
+              $data = $_SESSION['coursesdata'];
+              print $_SESSION['name'] . ',';
+              print '<p>';
+              print '&nbsp These are the courses that you have registered for, if any.';
+              print ' Please note that courses mentioned are tentative and subject to';
+              print ' change upon teacher availability and registrants.';
+              print '</p><p>';
+
+              if (count($data) > 0) {
+                print '<table width="550" border=0 class="popcal">';
+                print '<tr>';
+                print '  <th>Course Name</th>';
+                print '  <th>Start Date</th>';
+                print '  <th>End Date</th>';
+                print '  <th>Day [Time]</th>';
+                //print '  <th>Venue</th>';
+                print '  <th>Room</th>';
+                //print '  <th>Price</th>';
+                print '  <th>Status</th>';
+                print '  <th>Action</th>';
+                print '</tr>';
+                for ($i=0; $i < count($data); $i++) {
+
+					if (($i % 2) > 0) {
+						print '<tr bgcolor="silver" valign="top">';
+					} else {
+						print '<tr valign="top">';
+					}
+                  print '<td align="center">' . $data[$i][0] . '</td>';
+                  print '<td align="center">' . $data[$i][1] . '</td>';
+                  print '<td align="center">' . $data[$i][2] . '</td>';
+                  print '<td align="center">' . $data[$i][3] . '</td>';
+                  //print '<td align="center">' . $data[$i][9] . '</td>';
+                  print '<td align="center">' . $data[$i][8] . '</td>';//room
+                  //print '<td align="center">$' . $data[$i][4] . '</td>';//price
+
+                  switch(strtolower($data[$i][5])) {
+                  	case "tentative":
+		                print '<td align="center"><font color="gray">' . $data[$i][5] . '</font></td>';
+                  		//print '<td align="center"><input type="button" value="Remove" onclick="javascript:window.location=\'crc_handler.php?method=courses&func=remove&course=' . $data[$i][6] . '\';" class="button"></td>';
+						print '<td align="center">[None]</td>';
+                  		break;
+                  	case "in progress":
+		                print '<td align="center"><font color="maroon">' . $data[$i][5] . '</font></td>';
+						if ($data[$i][11] == 1) {
+	                  		print '<td align="center"><input type="button" value="Evaluate" onclick="javascript:window.location=\'crc_handler.php?method=evaluation&func=get&course=' . $data[$i][10] . '\';" class="button"></td>';
+						} else {
+	                  		print '<td align="center">[None]</td>';
+						}
+                  		break;
+                  	case "completed":
+		                print '<td align="center"><font color="green">' . $data[$i][5] . '</font></td>';
+						if ($data[$i][11] == 1) {
+	                  		print '<td align="center"><input type="button" value="Evaluate" onclick="javascript:window.location=\'crc_handler.php?method=evaluation&func=get&course=' . $data[$i][10] . '\';" class="button"></td>';
+						} else {
+	                  		print '<td align="center">[None]</td>';
+						}
+                  		break;
+                  	case "no participation":
+		                print '<td align="center"><font color="red">' . $data[$i][5] . '</font></td>';
+                  		print '<td align="center">[None]</td>';
+                  		break;
+                  	case "cancelled":
+		                print '<td align="center"><font color="red">' . $data[$i][5] . '</font></td>';
+                  		print '<td align="center">[None]</td>';
+                  		break;
+                  	default:
+		                print '<td align="center">' . $data[$i][5] . '</td>';
+                  		print '<td align="center">[None]</td>';
+                  }
+
+                  print '</tr>';
+                }
+                print '</table>';
+              } else {
+                print '<table class="green"><tr><td>You currently have not registered';
+				print ' for any courses. In order to enroll, please visit the [Enrollmen]';
+				print ' link and add the course(s) that you would like to enroll for.</td></tr></table>';
+              }
+
+              print '</p><p>';
+              print '  FreeSMS Team<br>';
+              print '  </p>';
+              print '</td></tr>';
+            }
+          ?>
+      </table>
+    </td>
+  </tr>
+</table>
+

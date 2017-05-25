@@ -1,0 +1,96 @@
+<form name="editprofile" action="crc_handler.php?method=courses&func=enroll" method="post">
+
+<input type="hidden" name="context" value="ou=Don Mills,ou=Toronto,ou=Ontario,ou=Canada,o=CRC World">
+
+<table width="550">
+	<tr>
+
+		<td valign="top" width="80">
+			<!--
+			This is the menu
+			-->
+			<br><br>
+				<?php
+					include "../common/crc_menu.html";
+				?>
+		</td>
+
+		<td valign="top" align="left" width="550">
+	    <!--
+        This is the content
+      -->
+      <br><br>
+      <table class="tbl">
+        <tr><td valign="top">
+          <?php
+            if (isset($_SESSION['msg'])) {
+			     $len = strlen($_SESSION['msg']);
+            } else {
+                $len = 0;
+            }
+
+			if ($len > 0) {
+				print('<tr><td class="RED"><br>' . $_SESSION['msg'] . '<br></td></tr>');
+			}
+
+			$data = $_SESSION['coursesdata'];
+			$data_len = count($data);
+
+			print $_SESSION['name'] . ',';
+            print '<p>';
+            print '&nbsp These are all available courses, if any.';
+            print ' Please note that courses mentioned are tentative and subject to';
+            print ' change upon teacher availability and registrants.';
+            print '</p><p>';
+
+			if ($data_len > 0) {
+
+		        print '<table width="550" border=0 class="popcal">';
+				print '<tr>';
+				print '  <th>Course Name</th>';
+				print '  <th>Start Date</th>';
+				print '  <th>End Date</th>';
+				print '  <th>Day [Time]</th>';
+				print '  <th>Room</th>';
+				print '  <th>Status</th>';
+				print '  <th>Selection</th>';
+				print '</tr>';
+
+				for ($i=0; $i < $data_len; $i++) {
+
+					print '<tr>';
+					print '<td align="center">' . $data[$i][0] . '</td>';
+					print '<td align="center">' . $data[$i][1] . '</td>';
+					print '<td align="center">' . $data[$i][2] . '</td>';
+					print '<td align="center">' . $data[$i][3] . '</td>';
+					print '<td align="center">' . $data[$i][8] . '</td>';
+					print '<td align="center">' . $data[$i][5] . '</td>';
+					//display the course as checked or unchecked
+					if (true == $data[$i][9]) {
+						print '<td align="center"><input type=checkbox disabled="disabled" checked name="course' . $i . '"></td>';
+					} else {
+						print '<td align="center"><input type=checkbox name="course' . $i . '"></td>';
+					}
+
+					print '</tr>';
+
+				}
+
+				print '</table>';
+
+				print '<center>';
+    	  		print '<p><input type="submit"  name="Enroll" value="Enroll">';
+				print '</center>';
+
+			} else {
+				print '<table class="green"><tr><td>&nbsp Sorry there are no courses in the database at this time.</td></tr></table>';
+			}
+
+            print '<p>  FreeSMS Team<br></p>';
+		  ?>
+      </table>
+    </td>
+  </tr>
+</table>
+
+</form>

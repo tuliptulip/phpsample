@@ -1,0 +1,160 @@
+<table class="MAIN">
+	<tr>
+    <td valign="top">
+      <!--
+        This is the menu
+      -->
+      <br><br>
+
+				<?php
+					include "../common/crc_menu.html";
+				?>
+
+    </td>
+    <td>&nbsp;&nbsp;<td>
+    <td valign="top">
+
+      <br><br>
+
+					<?php
+
+					print '<form name="register" action="crc_handler.php?method=evaluation&func=add" method="post">';
+
+					print '<table>';
+
+					print '<input type="hidden" name="schedule_id" value="' . $_GET['course'] . '">';
+
+                    if (isset($_SESSION['msg'])) {
+                        $len = strlen($_SESSION['msg']);
+                    } else {
+                        $len = 0;
+                    }
+
+					if ($len > 0) {
+
+						print('<tr><td class="RED"><br>' . $_SESSION['msg'] . '<br></td></tr>');
+						$_SESSION['msg'] = "";
+
+					} else {
+
+						print '<tr>';
+						print '	<td>';
+
+						print '	  Welcome ' . $_SESSION['name'] . ',';
+
+						print '	  <p>';
+						print '		Please complete all the sections of this form. The comments you provide helps us serve you';
+						print '		better at the same time improving the quality of this educational program.';
+						print '    <p>';
+						print '	   <p>';
+						print '		Circle the number that you think applies the closest to your experience. The numbers';
+						print '		signify as follows:';
+						print '		<p>';
+						print '		<font color="GREEN">1</font>-Strongly Disagree, ';
+						print '		<font color="GREEN">2</font>-Disagree, ';
+						print '		<font color="GREEN">3</font>-Neutral, ';
+						print '		<font color="GREEN">4</font>-Agree, ';
+						print '		<font color="GREEN">5</font>-Strongly Agree';
+						print '		<p>';
+						print '<b>Please note that once you submit your feedback you cannot change your answers or reevaluate this course.</b>';
+						print '<p><br></td>';
+						print ' </tr>';
+
+						print '<tr>';
+						print '	<td>';
+
+					$data = $_SESSION['evaluation'];
+					$records = count($data);
+
+					if ($records > 0) {
+
+						print '<table border="1" align="left" cellpadding="0" cellspacing="0">';
+
+						print '<tr  CLASS="backgroundblack" valign="top">';
+						print '<td  CLASS="fontwhite" width="5" align="center"></td>';
+						print '<td class="fontwhite" width="50" align="center">Question<br><br></td>';
+						print '<td class="fontwhite" width="10" align="center">1</td>';
+						print '<td class="fontwhite" width="10" align="center">2</td>';
+						print '<td class="fontwhite" width="10" align="center">3</td>';
+						print '<td class="fontwhite" width="10" align="center">4</td>';
+						print '<td class="fontwhite" width="10" align="center">5</td>';
+						print '<td class="fontwhite" width="50" align="center">Comments</td>';
+						print '</tr>';
+
+						for($i = 0; $i < $records; $i++) {
+
+							$row = $data[$i];
+
+							switch(strtolower($row[3])) {
+
+								case "option":
+
+									if (($i % 2) > 0) {
+										$myform = '<tr bgcolor="silver" valign="top">';
+									} else {
+										$myform = '<tr valign="top">';
+									}
+									$myform = $myform . '<td>' . trim($i + 1) . '.</td>';
+									$myform = $myform . '<td>' . $row[1] . '</td>';
+									$myform = $myform . '<td>';
+									$myform = $myform . '<input type="radio" name="' . $row[0] . 'name' . '" value="1" checked>';
+									$myform = $myform . '</td><td>';
+									$myform = $myform . '<input type="radio" name="' . $row[0] . 'name' . '" value="2">';
+									$myform = $myform . '</td><td>';
+									$myform = $myform . '<input type="radio" name="' . $row[0] . 'name' . '" value="3">';
+									$myform = $myform . '</td><td>';
+									$myform = $myform . '<input type="radio" name="' . $row[0] . 'name' . '" value="4">';
+									$myform = $myform . '</td><td>';
+									$myform = $myform . '<input type="radio" name="' . $row[0] . 'name' . '" value="5">';
+									$myform = $myform . '</td><td>';
+									$myform = $myform . '<input type="text" name="' . $row[0] . 'comment' . '" size="25" width="80">';
+									$myform = $myform . '</td>';
+									$myform = $myform . '</tr>';
+									break;
+
+								case "comment":
+
+									if (($i % 2) > 0) {
+										$myform = '<tr bgcolor="silver" valign="top">';
+									} else {
+										$myform = '<tr valign="top">';
+									}
+									$myform = $myform . '<td>' . trim($i + 1) . '.</td>';
+									$myform = $myform . '<td>' . $row[1] . '</td>';
+									$myform = $myform . '<td colspan="6">';
+									$myform = $myform . '<textarea name="' . $row[0] . 'name' . '" cols="47" rows="3" wrap="soft"></textarea>';
+									$myform = $myform . '</td>';
+									$myform = $myform . '</tr>';
+									break;
+
+							}
+
+							print $myform;
+
+						}
+
+						print '<tr>';
+
+						print '<td align="center" colspan="8"><br><input type="submit" name="submit" value="Submit"><br><br></td>';
+
+						print '</tr>';
+						print '</table>';
+
+
+					} else {
+
+						print '<tr><td>Sorry the evaluation form is not available at this time. Please try again at a later date.</td></tr>';
+
+					}
+
+					}
+
+					?>
+
+			</td>
+			</tr>
+			<table>
+		</form>
+	</td>
+	</tr>
+</table>

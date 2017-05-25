@@ -1,0 +1,51 @@
+<?php
+  if (!isset($_SESSION['uid'])) {
+    echo '<meta http-equiv="refresh"' . 'content="0;URL=crc_login.php">';
+  }
+?>
+<table width="500">
+	<tr>
+		<td valign="top" width="80">
+
+			<br><br>
+
+			<!--
+			This is the menu
+			-->
+
+		<?php
+			include "../common/crc_menu.html"
+		?>
+
+		</td>
+
+
+		<td valign="top" align="left" width="420">
+
+			<!--
+			This is the content
+			-->
+			<br><br>
+
+			<table class="tbl">
+				<tr>
+					<td valign="top">
+						 Welcome <?php print($_SESSION['name']); ?>,
+						
+						 <p>
+						 You have accessed the Free Student Management System.
+						 Please use the menu on your left in order to navigate through the system. 
+						 </p>
+						
+						 <p>
+						 Thank You, <br>
+						 FreeSMS team <br> 
+						 </p>
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+<table>
+

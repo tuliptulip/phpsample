@@ -1,0 +1,140 @@
+<form name="profile" action="crc_handler.php?method=profile&func=update" method="post">
+
+<input type="hidden" name="context" value="ou=Don Mills,ou=Toronto,ou=Ontario,ou=Canada,o=CRC World">
+
+<table width="500">
+		<tr>
+		<td valign="top" width="80">
+
+			<!--
+			This is the menu
+			-->
+			<br><br>
+
+				<?php
+					include "../common/crc_menu.html";
+				?>
+
+		</td>
+
+		<td valign="top" align="left" width="420">
+
+			<br>
+
+	<table class="std">
+
+    <?php
+        if (isset($_SESSION['msg'])) {
+		  $len = strlen($_SESSION['msg']);
+        } else {
+            $len = 0;
+        }
+		if ($len > 0) {
+    		print('<tr><td class="error" align="center"><b>' . $_SESSION['msg'] . '</b></td></tr>');
+			$_SESSION['msg'] = "";
+		}
+        $data = $_SESSION["profiledata"];
+		if ($data != NULL) {
+		print '<tr>';
+			print '<th colspan="2"><em>Edit User Profile</em></th>';
+		print '</tr>';
+          print '<tr><td><br>';
+          print 'Please note that the fields with "<span class="error">*</span>" are mandatory.';
+		  print '<tr><br><td>';
+		  print '<table  width="400" align="left" border="0" cellpadding="6" cellspacing="0">';
+          print '<tr>';
+          print '<td><input type="hidden" name="profileid" value="' . $_SESSION['profileid'] . '" class="text"></td>';
+          print '</tr>';
+		  print '<tr>';
+		  print '<td align="right"><span class="error">*</span>Username: </td>';
+		  print '<td><input type="text" name="username" size="15" value="' . $data[1] . '"></td>';
+		  print '</tr>';
+          print '<tr>';
+          print '<td align="right"><span class="error">*</span>Password: </td>';
+          print '<td><input type="password" name="password" size="15" value=""></td>';
+          print '</tr>';
+          print '<tr>';
+          print '<td align="right"><span class="error">*</span>Given Name: </td>';
+          print '<td><input type="text" name="fname" size="15" value="' . $data[3] . '"></td>';
+          print '</tr>';
+          print '<tr>';
+          print '<td align="right"><span class="error">*</span>Surname: </td>';
+          print '<td><input type="text" name="lname" size="15" value="' . $data[4] . '"</td>';
+          print '</tr>';
+    	  print '<tr>';
+          print '<td align="right"><span class="error">*</span>Email: </td>';
+          print '<td><input type="text" name="email" size="40" value="' . $data[5] . '"></td>';
+          print '</tr>';
+    		  print '<tr>';
+          print '<td align="right"><span class="error">*</span>Gender: </td>';
+          print '<td><select name="gender">';
+
+          if ($data[7] = 'M') {
+            print("<option selected>Male</option>");
+            print("<option>Female</option>");
+          } else {
+            print("<option>Male</option>");
+            print("<option selected>Female</option>");
+          }
+
+          print '    </select>';
+          print '</td>';
+        print '</tr>';
+    	print '<tr>';
+          print '<td align="right"><span class="error">*</span>Date of Birth: </td>';
+          print '<td><input type="text" name="day" size="2" value="' . substr($data[6], 8, 2) . '">-<input type="text" name="month" size="2" value="' . substr($data[6], 5, 2) . '">-<input type="text" name="year" size="4" value="' . substr($data[6], 0, 4) . '"> (DD-MM-YYYY)';
+          print '</td>';
+        print '</tr>';
+    		print '<tr>';
+          print '<td align="right"><span class="error">*</span>Address: </td>';
+          print '<td><input type="text" name="add1" size="40" value="' . $data[11] . '"></td>';
+        print '</tr>';
+    		print '<tr>';
+          print '<td></td>';
+          print '<td><input type="text" name="add2" size="40" value="' . $data[12] . '"></td>';
+        print '</tr>';
+    		print '<tr>';
+          print '<td align="right"><span class="error">*</span>City: </td>';
+          print '<td><input type="text" name="city" size="30" value="' . $data[13] . '"></td>';
+        print '</tr>';
+    	print '<tr>';
+          print '<td align="right"><span class="error">*</span>Province: </td>';
+          print '<td><input type="text" name="province" size="2" value="' . $data[14] . '"></td>';
+        print '</tr>';
+    	print '<tr>';
+          print '<td align="right"><span class="error">*</span>Country: </td>';
+          print '<td><input type="text" name="country" size="30" value="' . $data[16] . '"></td>';
+        print '</tr>';
+    	print '<tr>';
+          print '<td align="right"><span class="error">*</span>Postal Code: </td>';
+          print '<td><input type="text" name="pc" size="15" value="' . $data[15] . '"></td>';
+        print '</tr>';
+    	print '<tr>';
+          print '<td align="right"><span class="error">*</span>Phone: </td>';
+          print '<td>(<input type="text" name="lcode" size="4" value="' . substr($data[17], 0, 4) . '">) ';
+              print '<input type="text" name="lprefix" size="4" value="' . substr($data[17], 4, 4) . '">-';
+              print '<input type="text" name="lpostfix" size="6" value="' . substr($data[17], 8, 6) . '">';
+          print '</td>';
+        print '</tr>';
+  	print '<tr>';
+      print '<td colspan="3" align="center"><BR/><input type="submit" onclick="javascript:verify(\'profile\');" name="update" value="Update">';
+		  print '</td>';
+    print '</tr>';
+      print '</table>';
+
+      } else {
+
+          print '<tr><td><br>';
+          print 'Sorry, there was an error trying to retrieve your profile. Please contact a freeSMS team member for support.';
+		      print '<br>';
+
+      }
+
+          ?>
+      </td>
+    </tr>
+
+
+	</table>
+</form>
+
